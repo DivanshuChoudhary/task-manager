@@ -1,83 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dockerized Task Manager</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
-
 <body>
 
-    <nav class="navbar">
+<nav class="navbar">
 
-        <div class="logo">
-            📝 Task Manager
+    <div class="logo">
+        📝 Task Manager
+    </div>
+
+    <ul>
+        <li><a href="/" class="active">Dashboard</a></li>
+        <li><a href="/tasks.html">Tasks</a></li>
+        <li><a href="/completed.html">Completed</a></li>
+        <li><a href="/pending.html">Pending</a></li>
+        <li><a href="/analytics.html">Analytics</a></li>
+        <li><a href="/about.html">About</a></li>
+    </ul>
+
+</nav>
+
+<div class="container">
+
+    <h1>Dashboard</h1>
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>Total Tasks</h2>
+            <h3 id="totalTasks">0</h3>
         </div>
 
-        <ul>
-
-            <li><a href="index.html" class="active">Dashboard</a></li>
-
-            <li><a href="tasks.html">Tasks</a></li>
-
-            <li><a href="completed.html">Completed</a></li>
-
-            <li><a href="pending.html">Pending</a></li>
-
-            <li><a href="analytics.html">Analytics</a></li>
-
-            <li><a href="about.html">About</a></li>
-
-        </ul>
-
-    </nav>
-
-    <div class="container">
-
-        <h1>Dashboard</h1>
-
-        <div class="cards">
-
-            <div class="card">
-
-                <h2>Total Tasks</h2>
-
-                <h3 id="totalTasks">0</h3>
-
-            </div>
-
-            <div class="card">
-
-                <h2>Completed</h2>
-
-                <h3 id="completedTasks">0</h3>
-
-            </div>
-
-            <div class="card">
-
-                <h2>Pending</h2>
-
-                <h3 id="pendingTasks">0</h3>
-
-            </div>
-
+        <div class="card">
+            <h2>Completed</h2>
+            <h3 id="completedTasks">0</h3>
         </div>
 
-        <div class="recent">
-
-            <h2>Recent Tasks</h2>
-
-            <ul id="recentTaskList"></ul>
-
+        <div class="card">
+            <h2>Pending</h2>
+            <h3 id="pendingTasks">0</h3>
         </div>
 
     </div>
 
-<script src="js/dashboard.js"></script>
+    <div class="recent">
+
+        <h2>Recent Tasks</h2>
+
+        <ul id="recentTaskList"></ul>
+
+    </div>
+
+</div>
+
+<script src="/dashboard.js"></script>
 
 </body>
 </html>
