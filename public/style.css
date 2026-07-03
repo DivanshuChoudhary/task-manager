@@ -1,5 +1,8 @@
-/* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* ===========================
+   Google Font
+=========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 *{
     margin:0;
@@ -9,25 +12,37 @@
 }
 
 body{
-    background:#eef2ff;
+    background:#eef4ff;
+    color:#222;
 }
 
-/* Navbar */
+/* ===========================
+   Navbar
+=========================== */
 
 .navbar{
+    width:100%;
+    height:75px;
     background:#0f172a;
-    color:white;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:18px 60px;
+    padding:0 60px;
     position:sticky;
     top:0;
+    z-index:1000;
+    box-shadow:0 5px 20px rgba(0,0,0,.2);
 }
 
 .logo{
+    color:white;
     font-size:24px;
     font-weight:700;
+}
+
+.logo i{
+    color:#38bdf8;
+    margin-right:8px;
 }
 
 .navbar ul{
@@ -44,14 +59,41 @@ body{
     text-decoration:none;
     transition:.3s;
     font-size:16px;
+    font-weight:500;
 }
 
-.navbar ul li a:hover,
-.navbar ul li a.active{
+.navbar ul li a:hover{
     color:#38bdf8;
 }
 
-/* Container */
+.active{
+    color:#38bdf8 !important;
+}
+
+/* ===========================
+   Hero
+=========================== */
+
+.hero{
+    width:100%;
+    padding:70px;
+    background:linear-gradient(135deg,#2563eb,#38bdf8);
+    color:white;
+}
+
+.hero h1{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:18px;
+    opacity:.95;
+}
+
+/* ===========================
+   Container
+=========================== */
 
 .container{
     width:90%;
@@ -59,54 +101,124 @@ body{
     margin:40px auto;
 }
 
-.container h1{
-    color:#1e293b;
+.dashboard-title{
     margin-bottom:30px;
 }
 
-/* Dashboard Cards */
+.dashboard-title h2{
+    font-size:30px;
+}
+
+/* ===========================
+   Cards
+=========================== */
 
 .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:25px;
 }
 
 .card{
     background:white;
-    border-radius:16px;
+    border-radius:20px;
     padding:30px;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-    transition:.3s;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    transition:.4s;
 }
 
 .card:hover{
     transform:translateY(-8px);
 }
 
-.card h2{
-    color:#64748b;
-    font-size:18px;
+.card h3{
+    color:#666;
+    margin-top:15px;
 }
 
-.card h3{
+.card h1{
+    font-size:45px;
+    margin-top:10px;
+    color:#0f172a;
+}
+
+.icon{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:25px;
+}
+
+.blue{
+    background:#2563eb;
+}
+
+.green{
+    background:#22c55e;
+}
+
+.red{
+    background:#ef4444;
+}
+
+/* ==========================================
+   Progress Card
+========================================== */
+
+.progress-card{
+    background:#fff;
+    margin-top:35px;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.progress-card h2{
+    margin-bottom:20px;
+    color:#0f172a;
+}
+
+.progress{
+    width:100%;
+    height:20px;
+    background:#e2e8f0;
+    border-radius:50px;
+    overflow:hidden;
+}
+
+#progressBar{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    transition:.5s;
+}
+
+#progressText{
     margin-top:15px;
-    font-size:42px;
+    font-size:18px;
+    font-weight:bold;
     color:#2563eb;
 }
 
-/* Recent Tasks */
+/* ==========================================
+   Recent Tasks
+========================================== */
 
 .recent{
-    margin-top:40px;
-    background:white;
+    margin-top:35px;
+    background:#fff;
+    border-radius:20px;
     padding:30px;
-    border-radius:16px;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
 }
 
 .recent h2{
     margin-bottom:20px;
+    color:#0f172a;
 }
 
 .recent ul{
@@ -114,42 +226,62 @@ body{
 }
 
 .recent li{
-    padding:15px;
-    border-bottom:1px solid #ddd;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px;
+    margin-bottom:12px;
+    border-radius:12px;
+    background:#f8fafc;
+    transition:.3s;
 }
 
-.recent li:last-child{
-    border-bottom:none;
+.recent li:hover{
+    transform:translateX(5px);
+    background:#e0f2fe;
 }
 
-/* Task Page */
+/* ==========================================
+   Task Input
+========================================== */
 
 .task-input{
     display:flex;
-    gap:10px;
-    margin-bottom:20px;
+    gap:15px;
+    margin-bottom:25px;
 }
 
 .task-input input{
     flex:1;
-    padding:14px;
-    border:1px solid #ddd;
-    border-radius:10px;
+    padding:16px;
+    border:1px solid #d1d5db;
+    border-radius:12px;
     font-size:16px;
+    outline:none;
+}
+
+.task-input input:focus{
+    border-color:#2563eb;
 }
 
 .task-input button{
-    padding:14px 25px;
+    padding:16px 30px;
     border:none;
+    border-radius:12px;
     background:#2563eb;
-    color:white;
-    border-radius:10px;
+    color:#fff;
     cursor:pointer;
+    transition:.3s;
+    font-weight:bold;
 }
 
 .task-input button:hover{
     background:#1d4ed8;
 }
+
+/* ==========================================
+   Search
+========================================== */
 
 .search-box{
     margin-bottom:25px;
@@ -157,45 +289,33 @@ body{
 
 .search-box input{
     width:100%;
-    padding:14px;
-    border:1px solid #ddd;
-    border-radius:10px;
+    padding:16px;
+    border-radius:12px;
+    border:1px solid #d1d5db;
+    outline:none;
 }
+
+.search-box input:focus{
+    border-color:#2563eb;
+}
+
+/* ==========================================
+   Task List
+========================================== */
 
 #taskList{
     list-style:none;
 }
 
 #taskList li{
-    background:white;
-    margin-bottom:15px;
-    padding:18px;
-    border-radius:12px;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    background:#fff;
+    padding:20px;
+    margin-bottom:15px;
+    border-radius:15px;
     box-shadow:0 5px 15px rgba(0,0,0,.08);
-}
-
-.task-actions button{
-    margin-left:8px;
-    border:none;
-    padding:8px 15px;
-    border-radius:8px;
-    color:white;
-    cursor:pointer;
-}
-
-.complete-btn{
-    background:#22c55e;
-}
-
-.edit-btn{
-    background:#f59e0b;
-}
-
-.delete-btn{
-    background:#ef4444;
 }
 
 .completed{
@@ -203,27 +323,95 @@ body{
     color:gray;
 }
 
-/* Responsive */
+.task-actions{
+    display:flex;
+    gap:10px;
+}
+
+.task-actions button{
+    border:none;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    color:white;
+    transition:.3s;
+}
+
+.complete-btn{
+    background:#22c55e;
+}
+
+.complete-btn:hover{
+    background:#16a34a;
+}
+
+.edit-btn{
+    background:#f59e0b;
+}
+
+.edit-btn:hover{
+    background:#d97706;
+}
+
+.delete-btn{
+    background:#ef4444;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
 
 @media(max-width:768px){
 
 .navbar{
     flex-direction:column;
+    height:auto;
     padding:20px;
 }
 
 .navbar ul{
+    margin-top:15px;
     flex-wrap:wrap;
     justify-content:center;
-    margin-top:15px;
 }
 
 .navbar ul li{
     margin:8px;
 }
 
+.hero{
+    padding:40px 25px;
+}
+
+.hero h1{
+    font-size:32px;
+}
+
+.cards{
+    grid-template-columns:1fr;
+}
+
 .task-input{
     flex-direction:column;
+}
+
+.task-input button{
+    width:100%;
+}
+
+#taskList li{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.task-actions{
+    width:100%;
+    justify-content:flex-end;
 }
 
 }

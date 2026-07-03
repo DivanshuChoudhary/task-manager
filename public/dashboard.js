@@ -1,36 +1,109 @@
+// =====================================
+// Dashboard Script
+// =====================================
+
 async function loadDashboard() {
 
-    const response = await fetch("/api/tasks");
+    try {
 
-    const tasks = await response.json();
+        const response = await fetch("/api/tasks");
+        const tasks = await response.json();
 
-    const total = tasks.length;
+        const total = tasks.length;
+        const completed = tasks.filter(task => task.completed).length;
+        const pending = total - completed;
 
-    const completed = tasks.filter(task => task.completed).length;
+        animateCounter("totalTasks", total);
+        animateCounter("completedTasks", completed);
+        animateCounter("pendingTasks", pending);
 
-    const pending = total - completed;
+        // Progress Bar
+        const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
 
-    document.getElementById("totalTasks").innerText = total;
+        const progressBar = document.getElementById("progressBar");
+        const progressText = document.getElementById("progressText");
 
-    document.getElementById("completedTasks").innerText = completed;
+        if (progressBar) {
+            progressBar.style.width = progress + "%";
+        }
 
-    document.getElementById("pendingTasks").innerText = pending;
+        if (progressText) {
+            progressText.innerText = progress + "% Completed";
+        }
 
-    const recentTaskList = document.getElementById("recentTaskList");
+        // Recent Tasks
+        const recentList = document.getElementById("recentTaskList");
 
-    recentTaskList.innerHTML = "";
+        if (recentList) {
 
-    tasks.slice(-5).reverse().forEach(task => {
+            recentList.innerHTML = "";
 
-        const li = document.createElement("li");
+            if (tasks.length === 0) {
 
-        li.innerHTML = `
-            ${task.completed ? "✅" : "⏳"} ${task.text}
-        `;
+                recentList.innerHTML = `
+                    <li>No Tasks Available</li>
+                `;
 
-        recentTaskList.appendChild(li);
+            } else {
 
-    });
+                tasks
+                    .slice(-5)
+                    .reverse()
+                    .forEach(task => {
+
+                        const li = document.createElement("li");
+
+                        li.innerHTML = `
+                            <span>
+                                ${task.completed ? "✅" : "⏳"} ${task.text}
+                            </span>
+
+                            <strong>
+                                ${task.completed ? "Completed" : "Pending"}
+                            </strong>
+                        `;
+
+                        recentList.appendChild(li);
+
+                    });
+
+            }
+
+        }
+
+    } catch (err) {
+
+        console.error(err);
+
+    }
+
+}
+
+// =====================================
+// Counter Animation
+// =====================================
+
+function animateCounter(id, target) {
+
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    let current = 0;
+
+    const timer = setInterval(() => {
+
+        current++;
+
+        element.innerText = current;
+
+        if (current >= target) {
+
+            clearInterval(timer);
+
+        }
+
+    }, 25);
 
 }
 
