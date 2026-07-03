@@ -3,27 +3,21 @@ const path = require("path");
 
 const filePath = path.join(__dirname, "../data/tasks.json");
 
-// Read File
 function readTasks() {
     const data = fs.readFileSync(filePath);
     return JSON.parse(data);
 }
 
-// Write File
 function writeTasks(tasks) {
     fs.writeFileSync(filePath, JSON.stringify(tasks, null, 2));
 }
 
-// GET Tasks
+// GET
 const getTasks = (req, res) => {
-
-    const tasks = readTasks();
-
-    res.json(tasks);
-
+    res.json(readTasks());
 };
 
-// POST Task
+// POST
 const addTask = (req, res) => {
 
     const tasks = readTasks();
@@ -42,8 +36,7 @@ const addTask = (req, res) => {
 
 };
 
-// DELETE Task
-
+// DELETE
 const deleteTask = (req, res) => {
 
     const id = Number(req.params.id);
@@ -54,14 +47,37 @@ const deleteTask = (req, res) => {
 
     writeTasks(tasks);
 
-    res.json({
-        message: "Task Deleted"
-    });
+    res.json({ message: "Deleted Successfully" });
+
+};
+
+// UPDATE
+const updateTask = (req, res) => {
+
+    const id = Number(req.params.id);
+
+    const tasks = readTasks();
+
+    const task = tasks.find(t => t.id === id);
+
+    if (!task) {
+        return res.status(404).json({
+            message: "Task Not Found"
+        });
+    }
+
+    task.text = req.body.text;
+    task.completed = req.body.completed;
+
+    writeTasks(tasks);
+
+    res.json(task);
 
 };
 
 module.exports = {
     getTasks,
     addTask,
-    deleteTask
+    deleteTask,
+    updateTask
 };

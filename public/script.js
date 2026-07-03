@@ -15,23 +15,85 @@ async function loadTasks() {
         const li = document.createElement("li");
 
         li.innerHTML = `
-            <span class="${task.completed ? "completed" : ""}">
-                ${task.text}
-            </span>
+        <span class="${task.completed ? "completed" : ""}">
+            ${task.text}
+        </span>
 
-            <div class="task-actions">
+        <div class="task-actions">
 
-                <button class="delete-btn">
-                    🗑
-                </button>
+            <button class="complete-btn">✔</button>
 
-            </div>
+            <button class="edit-btn">✏</button>
+
+            <button class="delete-btn">🗑</button>
+
+        </div>
         `;
+
+        // Complete
+
+        li.querySelector(".complete-btn").addEventListener("click", async () => {
+
+            await fetch(`/api/tasks/${task.id}`, {
+
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    text: task.text,
+                    completed: !task.completed
+
+                })
+
+            });
+
+            loadTasks();
+
+        });
+
+        // Edit
+
+        li.querySelector(".edit-btn").addEventListener("click", async () => {
+
+            const newTask = prompt("Edit Task", task.text);
+
+            if (!newTask) return;
+
+            await fetch(`/api/tasks/${task.id}`, {
+
+                method: "PUT",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    text: newTask,
+                    completed: task.completed
+
+                })
+
+            });
+
+            loadTasks();
+
+        });
+
+        // Delete
 
         li.querySelector(".delete-btn").addEventListener("click", async () => {
 
             await fetch(`/api/tasks/${task.id}`, {
+
                 method: "DELETE"
+
             });
 
             loadTasks();
@@ -48,12 +110,7 @@ addBtn.addEventListener("click", async () => {
 
     const text = taskInput.value.trim();
 
-    if (text === "") {
-
-        alert("Please Enter Task");
-
-        return;
-    }
+    if (!text) return;
 
     await fetch("/api/tasks", {
 
