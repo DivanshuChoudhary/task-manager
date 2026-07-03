@@ -4,11 +4,15 @@
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Analytics</title>
+    <title>Analytics | Dockerized Task Manager</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -16,43 +20,171 @@
 
 <body>
 
-<nav class="navbar">
+    <!-- Navbar -->
 
-<div class="logo">
-📝 Dockerized Task Manager
-</div>
+    <nav class="navbar">
 
-<ul>
+        <div class="logo">
 
-<li><a href="/">Dashboard</a></li>
+            <i class="fa-solid fa-chart-pie"></i>
 
-<li><a href="/tasks.html">Tasks</a></li>
+            Task Manager
 
-<li><a href="/completed.html">Completed</a></li>
+        </div>
 
-<li><a href="/pending.html">Pending</a></li>
+        <ul>
 
-<li><a href="/analytics.html" class="active">Analytics</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
 
-<li><a href="/about.html">About</a></li>
+            <li><a href="tasks.html">Tasks</a></li>
 
-</ul>
+            <li><a href="completed.html">Completed</a></li>
 
-</nav>
+            <li><a href="pending.html">Pending</a></li>
 
-<div class="container">
+            <li><a href="analytics.html" class="active">Analytics</a></li>
 
-<h1>📊 Task Analytics</h1>
+            <li><a href="about.html">About</a></li>
 
-<div class="card">
+        </ul>
 
-<canvas id="taskChart"></canvas>
+    </nav>
 
-</div>
+    <div class="container">
 
-</div>
+        <h1>
 
-<script src="dashboard.js"></script>
+            <i class="fa-solid fa-chart-line"></i>
+
+            Task Analytics
+
+        </h1>
+
+        <!-- Stats Cards -->
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="icon blue">
+
+                    <i class="fa-solid fa-list"></i>
+
+                </div>
+
+                <h3>Total Tasks</h3>
+
+                <h1 id="totalTasks">0</h1>
+
+            </div>
+
+            <div class="card">
+
+                <div class="icon green">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+                <h3>Completed</h3>
+
+                <h1 id="completedTasks">0</h1>
+
+            </div>
+
+            <div class="card">
+
+                <div class="icon red">
+
+                    <i class="fa-solid fa-clock"></i>
+
+                </div>
+
+                <h3>Pending</h3>
+
+                <h1 id="pendingTasks">0</h1>
+
+            </div>
+
+        </div>
+
+        <br><br>
+
+        <div class="card">
+
+            <canvas id="taskChart"></canvas>
+
+        </div>
+
+    </div>
+
+<script>
+
+async function loadAnalytics(){
+
+    const response = await fetch("/api/tasks");
+
+    const tasks = await response.json();
+
+    const total = tasks.length;
+
+    const completed = tasks.filter(task=>task.completed).length;
+
+    const pending = total-completed;
+
+    document.getElementById("totalTasks").innerText=total;
+
+    document.getElementById("completedTasks").innerText=completed;
+
+    document.getElementById("pendingTasks").innerText=pending;
+
+    new Chart(document.getElementById("taskChart"),{
+
+        type:"doughnut",
+
+        data:{
+
+            labels:["Completed","Pending"],
+
+            datasets:[{
+
+                data:[completed,pending],
+
+                backgroundColor:[
+
+                    "#22c55e",
+
+                    "#ef4444"
+
+                ]
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            plugins:{
+
+                legend:{
+
+                    position:"bottom"
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+loadAnalytics();
+
+</script>
 
 </body>
 
