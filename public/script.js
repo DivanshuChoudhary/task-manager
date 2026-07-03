@@ -1,93 +1,53 @@
 const taskInput = document.getElementById("taskInput");
 const addBtn = document.getElementById("addBtn");
 const taskList = document.getElementById("taskList");
-const searchTask = document.getElementById("searchTask");
 
-// Add Task
-addBtn.addEventListener("click", addTask);
+// Load Tasks
+async function loadTasks() {
 
-function addTask() {
+    const response = await fetch("/api/tasks");
 
-    const taskText = taskInput.value.trim();
+    const tasks = await response.json();
 
-    if (taskText === "") {
-        alert("Please enter a task!");
-        return;
-    }
+    taskList.innerHTML = "";
 
-    const li = document.createElement("li");
+    tasks.forEach(task => {
 
-    li.innerHTML = `
-        <span>${taskText}</span>
+        const li = document.createElement("li");
 
-        <div class="task-actions">
+        li.innerHTML = `
+            <span>${task.text}</span>
+        `;
 
-            <button class="complete-btn">✔</button>
-
-            <button class="edit-btn">✏</button>
-
-            <button class="delete-btn">🗑</button>
-
-        </div>
-    `;
-
-    taskList.appendChild(li);
-
-    taskInput.value = "";
-
-    // Complete Task
-    li.querySelector(".complete-btn").addEventListener("click", () => {
-
-        li.querySelector("span").classList.toggle("completed");
-
-    });
-
-    // Delete Task
-    li.querySelector(".delete-btn").addEventListener("click", () => {
-
-        li.remove();
-
-    });
-
-    // Edit Task
-    li.querySelector(".edit-btn").addEventListener("click", () => {
-
-        const span = li.querySelector("span");
-
-        const updatedTask = prompt("Edit Task", span.innerText);
-
-        if (updatedTask !== null && updatedTask.trim() !== "") {
-
-            span.innerText = updatedTask;
-
-        }
+        taskList.appendChild(li);
 
     });
 
 }
 
-// Search Task
+// Add Task
+addBtn.addEventListener("click", async () => {
 
-searchTask.addEventListener("keyup", () => {
+    const text = taskInput.value.trim();
 
-    const filter = searchTask.value.toLowerCase();
+    if (text === "") {
+        alert("Enter a task");
+        return;
+    }
 
-    const tasks = document.querySelectorAll("#taskList li");
-
-    tasks.forEach(task => {
-
-        const text = task.innerText.toLowerCase();
-
-        if (text.includes(filter)) {
-
-            task.style.display = "flex";
-
-        } else {
-
-            task.style.display = "none";
-
-        }
-
+    await fetch("/api/tasks", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text })
     });
 
+    taskInput.value = "";
+
+    loadTasks();
+
 });
+
+// Load tasks when page opens
+loadTasks();
