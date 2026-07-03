@@ -1,138 +1,163 @@
-const taskInput = document.getElementById("taskInput");
-const addBtn = document.getElementById("addBtn");
-const taskList = document.getElementById("taskList");
+const taskInput=document.getElementById("taskInput");
+const addBtn=document.getElementById("addBtn");
+const taskList=document.getElementById("taskList");
+const searchTask=document.getElementById("searchTask");
+const taskCount=document.getElementById("taskCount");
+const emptyMessage=document.getElementById("emptyMessage");
 
-async function loadTasks() {
+let allTasks=[];
 
-    const response = await fetch("/api/tasks");
+async function loadTasks(){
 
-    const tasks = await response.json();
+const response=await fetch("/api/tasks");
 
-    taskList.innerHTML = "";
+allTasks=await response.json();
 
-    tasks.forEach(task => {
-
-        const li = document.createElement("li");
-
-        li.innerHTML = `
-        <span class="${task.completed ? "completed" : ""}">
-            ${task.text}
-        </span>
-
-        <div class="task-actions">
-
-            <button class="complete-btn">✔</button>
-
-            <button class="edit-btn">✏</button>
-
-            <button class="delete-btn">🗑</button>
-
-        </div>
-        `;
-
-        // Complete
-
-        li.querySelector(".complete-btn").addEventListener("click", async () => {
-
-            await fetch(`/api/tasks/${task.id}`, {
-
-                method: "PUT",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    text: task.text,
-                    completed: !task.completed
-
-                })
-
-            });
-
-            loadTasks();
-
-        });
-
-        // Edit
-
-        li.querySelector(".edit-btn").addEventListener("click", async () => {
-
-            const newTask = prompt("Edit Task", task.text);
-
-            if (!newTask) return;
-
-            await fetch(`/api/tasks/${task.id}`, {
-
-                method: "PUT",
-
-                headers: {
-
-                    "Content-Type": "application/json"
-
-                },
-
-                body: JSON.stringify({
-
-                    text: newTask,
-                    completed: task.completed
-
-                })
-
-            });
-
-            loadTasks();
-
-        });
-
-        // Delete
-
-        li.querySelector(".delete-btn").addEventListener("click", async () => {
-
-            await fetch(`/api/tasks/${task.id}`, {
-
-                method: "DELETE"
-
-            });
-
-            loadTasks();
-
-        });
-
-        taskList.appendChild(li);
-
-    });
+displayTasks(allTasks);
 
 }
 
-addBtn.addEventListener("click", async () => {
+function displayTasks(tasks){
 
-    const text = taskInput.value.trim();
+taskList.innerHTML="";
 
-    if (!text) return;
+taskCount.innerText=`Total : ${tasks.length}`;
 
-    await fetch("/api/tasks", {
+emptyMessage.style.display=tasks.length===0?"block":"none";
 
-        method: "POST",
+tasks.forEach(task=>{
 
-        headers: {
+const li=document.createElement("li");
 
-            "Content-Type": "application/json"
+li.innerHTML=`
 
-        },
+<span class="${task.completed?"completed":""}">
+${task.text}
+</span>
 
-        body: JSON.stringify({
+<div class="task-actions">
 
-            text
+<button class="complete-btn">✔</button>
 
-        })
+<button class="edit-btn">✏</button>
 
-    });
+<button class="delete-btn">🗑</button>
 
-    taskInput.value = "";
+</div>
 
-    loadTasks();
+`;
+
+li.querySelector(".complete-btn").onclick=async()=>{
+
+await fetch(`/api/tasks/${task.id}`,{
+
+method:"PUT",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+text:task.text,
+
+completed:!task.completed
+
+})
+
+});
+
+loadTasks();
+
+};
+
+li.querySelector(".edit-btn").onclick=async()=>{
+
+const newTask=prompt("Edit Task",task.text);
+
+if(!newTask)return;
+
+await fetch(`/api/tasks/${task.id}`,{
+
+method:"PUT",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+text:newTask,
+
+completed:task.completed
+
+})
+
+});
+
+loadTasks();
+
+};
+
+li.querySelector(".delete-btn").onclick=async()=>{
+
+await fetch(`/api/tasks/${task.id}`,{
+
+method:"DELETE"
+
+});
+
+loadTasks();
+
+};
+
+taskList.appendChild(li);
+
+});
+
+}
+
+addBtn.onclick=async()=>{
+
+const text=taskInput.value.trim();
+
+if(text===""){
+
+alert("Enter Task");
+
+return;
+
+}
+
+await fetch("/api/tasks",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({text})
+
+});
+
+taskInput.value="";
+
+loadTasks();
+
+};
+
+searchTask.addEventListener("keyup",()=>{
+
+const keyword=searchTask.value.toLowerCase();
+
+const filtered=allTasks.filter(task=>
+
+task.text.toLowerCase().includes(keyword)
+
+);
+
+displayTasks(filtered);
 
 });
 

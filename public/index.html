@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,16 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div class="container">
 
         <h1>📝 Dockerized Task Manager</h1>
+
+        <p class="subtitle">
+            Manage your daily tasks efficiently
+        </p>
 
         <div class="task-input">
 
@@ -22,30 +28,35 @@
             >
 
             <button id="addBtn">
-                Add Task
+                Add
             </button>
 
         </div>
 
-        <div class="search-box">
+        <div class="top-bar">
 
             <input
                 type="text"
                 id="searchTask"
-                placeholder="🔍 Search task..."
+                placeholder="🔍 Search Task"
             >
+
+            <span id="taskCount">
+                Total : 0
+            </span>
 
         </div>
 
-        <ul id="taskList">
+        <ul id="taskList"></ul>
 
-            <!-- Tasks will appear here -->
-
-        </ul>
+        <p id="emptyMessage">
+            🎉 No Tasks Available
+        </p>
 
     </div>
 
     <script src="script.js"></script>
 
 </body>
+
 </html>
