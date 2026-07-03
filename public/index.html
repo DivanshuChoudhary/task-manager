@@ -4,11 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dockerized Task Manager</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>🚀 Dockerized Task Manager</h1>
-    <p>Server is running successfully.</p>
+    <div class="container">
+
+        <h1>📝 Dockerized Task Manager</h1>
+
+        <div class="task-input">
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter a new task..."
+            >
+
+            <button id="addBtn">
+                Add Task
+            </button>
+
+        </div>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchTask"
+                placeholder="🔍 Search task..."
+            >
+
+        </div>
+
+        <ul id="taskList">
+
+            <!-- Tasks will appear here -->
+
+        </ul>
+
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
