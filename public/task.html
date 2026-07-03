@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>All Tasks</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            📝 Task Manager
+        </div>
+
+        <ul>
+
+            <li><a href="index.html">Dashboard</a></li>
+
+            <li><a href="tasks.html" class="active">Tasks</a></li>
+
+            <li><a href="completed.html">Completed</a></li>
+
+            <li><a href="pending.html">Pending</a></li>
+
+            <li><a href="analytics.html">Analytics</a></li>
+
+            <li><a href="about.html">About</a></li>
+
+        </ul>
+
+    </nav>
+
+    <div class="container">
+
+        <h1>All Tasks</h1>
+
+        <div class="task-input">
+
+            <input
+                type="text"
+                id="taskInput"
+                placeholder="Enter New Task"
+            >
+
+            <button id="addBtn">
+                Add Task
+            </button>
+
+        </div>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchTask"
+                placeholder="Search Task..."
+            >
+
+        </div>
+
+        <ul id="taskList"></ul>
+
+    </div>
+
+    <script src="js/tasks.js"></script>
+
+</body>
+
+</html>
