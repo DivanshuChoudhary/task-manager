@@ -1,110 +1,83 @@
-// =====================================
-// Dashboard Script
-// =====================================
+// ================================
+// Dashboard
+// ================================
+
+const totalTasks = document.getElementById("totalTasks");
+const completedTasks = document.getElementById("completedTasks");
+const pendingTasks = document.getElementById("pendingTasks");
+const recentTaskList = document.getElementById("recentTaskList");
+
+// ================================
+// Load Dashboard
+// ================================
 
 async function loadDashboard() {
 
     try {
 
         const response = await fetch("/api/tasks");
+
         const tasks = await response.json();
 
-        const total = tasks.length;
-        const completed = tasks.filter(task => task.completed).length;
-        const pending = total - completed;
+        // Total Tasks
+        totalTasks.innerText = tasks.length;
 
-        animateCounter("totalTasks", total);
-        animateCounter("completedTasks", completed);
-        animateCounter("pendingTasks", pending);
+        // Completed Tasks
+        const completed = tasks.filter(task => task.completed);
 
-        // Progress Bar
-        const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
+        completedTasks.innerText = completed.length;
 
-        const progressBar = document.getElementById("progressBar");
-        const progressText = document.getElementById("progressText");
+        // Pending Tasks
+        const pending = tasks.filter(task => !task.completed);
 
-        if (progressBar) {
-            progressBar.style.width = progress + "%";
-        }
-
-        if (progressText) {
-            progressText.innerText = progress + "% Completed";
-        }
+        pendingTasks.innerText = pending.length;
 
         // Recent Tasks
-        const recentList = document.getElementById("recentTaskList");
+        recentTaskList.innerHTML = "";
 
-        if (recentList) {
+        if (tasks.length === 0) {
 
-            recentList.innerHTML = "";
+            recentTaskList.innerHTML = `
+                <li>No Tasks Available</li>
+            `;
 
-            if (tasks.length === 0) {
-
-                recentList.innerHTML = `
-                    <li>No Tasks Available</li>
-                `;
-
-            } else {
-
-                tasks
-                    .slice(-5)
-                    .reverse()
-                    .forEach(task => {
-
-                        const li = document.createElement("li");
-
-                        li.innerHTML = `
-                            <span>
-                                ${task.completed ? "✅" : "⏳"} ${task.text}
-                            </span>
-
-                            <strong>
-                                ${task.completed ? "Completed" : "Pending"}
-                            </strong>
-                        `;
-
-                        recentList.appendChild(li);
-
-                    });
-
-            }
-
+            return;
         }
 
-    } catch (err) {
+        // Latest 5 Tasks
+        tasks
+            .slice(-5)
+            .reverse()
+            .forEach(task => {
 
-        console.error(err);
+                const li = document.createElement("li");
+
+                li.innerHTML = `
+                    <span class="${task.completed ? "completed" : ""}">
+                        ${task.text}
+                    </span>
+                `;
+
+                recentTaskList.appendChild(li);
+
+            });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        recentTaskList.innerHTML = `
+            <li>Unable to Load Tasks</li>
+        `;
 
     }
 
 }
 
-// =====================================
-// Counter Animation
-// =====================================
-
-function animateCounter(id, target) {
-
-    const element = document.getElementById(id);
-
-    if (!element) return;
-
-    let current = 0;
-
-    const timer = setInterval(() => {
-
-        current++;
-
-        element.innerText = current;
-
-        if (current >= target) {
-
-            clearInterval(timer);
-
-        }
-
-    }, 25);
-
-}
+// ================================
+// Start
+// ================================
 
 loadDashboard();
