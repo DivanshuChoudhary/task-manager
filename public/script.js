@@ -17,15 +17,11 @@ let tasks = [];
 function showToast(message, color = "#16a34a") {
 
     toast.innerText = message;
-
     toast.style.background = color;
-
     toast.classList.add("show");
 
     setTimeout(() => {
-
         toast.classList.remove("show");
-
     }, 2500);
 
 }
@@ -44,13 +40,11 @@ async function loadTasks() {
 
         displayTasks(tasks);
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(error);
 
-        showToast("Unable to connect to server", "#dc2626");
+        showToast("Server Error", "#dc2626");
 
     }
 
@@ -82,35 +76,109 @@ function displayTasks(taskArray) {
 
         li.innerHTML = `
 
-        <span class="${task.completed ? "completed" : ""}">
+            <span class="${task.completed ? "completed" : ""}">
+                ${task.text}
+            </span>
 
-            ${task.text}
+            <div class="task-actions">
 
-        </span>
+                <button class="complete-btn">✔</button>
 
-        <div class="task-actions">
+                <button class="edit-btn">✏</button>
 
-            <button class="complete-btn">
+                <button class="delete-btn">🗑</button>
 
-                ✔
-
-            </button>
-
-            <button class="edit-btn">
-
-                ✏
-
-            </button>
-
-            <button class="delete-btn">
-
-                🗑
-
-            </button>
-
-        </div>
+            </div>
 
         `;
+
+        // ==========================
+        // Complete
+        // ==========================
+
+        li.querySelector(".complete-btn").addEventListener("click", async () => {
+
+            await fetch(`/api/tasks/${task.id}`, {
+
+                method: "PUT",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    text: task.text,
+
+                    completed: !task.completed
+
+                })
+
+            });
+
+            showToast("Task Updated");
+
+            loadTasks();
+
+        });
+
+        // ==========================
+        // Edit
+        // ==========================
+
+        li.querySelector(".edit-btn").addEventListener("click", async () => {
+
+            const newText = prompt("Edit Task", task.text);
+
+            if (!newText) return;
+
+            await fetch(`/api/tasks/${task.id}`, {
+
+                method: "PUT",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    text: newText,
+
+                    completed: task.completed
+
+                })
+
+            });
+
+            showToast("Task Edited");
+
+            loadTasks();
+
+        });
+
+        // ==========================
+        // Delete
+        // ==========================
+
+        li.querySelector(".delete-btn").addEventListener("click", async () => {
+
+            if (!confirm("Delete this task?")) return;
+
+            await fetch(`/api/tasks/${task.id}`, {
+
+                method: "DELETE"
+
+            });
+
+            showToast("Task Deleted", "#dc2626");
+
+            loadTasks();
+
+        });
 
         taskList.appendChild(li);
 
@@ -119,133 +187,7 @@ function displayTasks(taskArray) {
 }
 
 // ===================================
-// Complete Task
-// ===================================
-
-li.querySelector(".complete-btn").addEventListener("click", async () => {
-
-    try {
-
-        await fetch(`/api/tasks/${task.id}`, {
-
-            method: "PUT",
-
-            headers: {
-
-                "Content-Type": "application/json"
-
-            },
-
-            body: JSON.stringify({
-
-                text: task.text,
-
-                completed: !task.completed
-
-            })
-
-        });
-
-        showToast("Task Updated Successfully");
-
-        loadTasks();
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        showToast("Update Failed", "#dc2626");
-
-    }
-
-});
-
-// ===================================
-// Edit Task
-// ===================================
-
-li.querySelector(".edit-btn").addEventListener("click", async () => {
-
-    const newText = prompt("Edit Task", task.text);
-
-    if (!newText || newText.trim() === "") return;
-
-    try {
-
-        await fetch(`/api/tasks/${task.id}`, {
-
-            method: "PUT",
-
-            headers: {
-
-                "Content-Type": "application/json"
-
-            },
-
-            body: JSON.stringify({
-
-                text: newText.trim(),
-
-                completed: task.completed
-
-            })
-
-        });
-
-        showToast("Task Edited Successfully");
-
-        loadTasks();
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        showToast("Edit Failed", "#dc2626");
-
-    }
-
-});
-
-// ===================================
-// Delete Task
-// ===================================
-
-li.querySelector(".delete-btn").addEventListener("click", async () => {
-
-    const confirmDelete = confirm("Are you sure you want to delete this task?");
-
-    if (!confirmDelete) return;
-
-    try {
-
-        await fetch(`/api/tasks/${task.id}`, {
-
-            method: "DELETE"
-
-        });
-
-        showToast("Task Deleted Successfully", "#dc2626");
-
-        loadTasks();
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        showToast("Delete Failed", "#dc2626");
-
-    }
-
-});
-
-// ===================================
-// Add New Task
+// Add Task
 // ===================================
 
 addBtn.addEventListener("click", async () => {
@@ -254,58 +196,40 @@ addBtn.addEventListener("click", async () => {
 
     if (text === "") {
 
-        showToast("Please Enter a Task", "#f59e0b");
+        showToast("Please Enter Task", "#f59e0b");
 
         return;
 
     }
 
-    try {
+    await fetch("/api/tasks", {
 
-        const response = await fetch("/api/tasks", {
+        method: "POST",
 
-            method: "POST",
+        headers: {
 
-            headers: {
+            "Content-Type": "application/json"
 
-                "Content-Type": "application/json"
+        },
 
-            },
+        body: JSON.stringify({
 
-            body: JSON.stringify({
+            text
 
-                text: text
+        })
 
-            })
+    });
 
-        });
+    taskInput.value = "";
 
-        if (!response.ok) {
+    showToast("Task Added Successfully");
 
-            throw new Error("Failed to add task");
-
-        }
-
-        taskInput.value = "";
-
-        showToast("Task Added Successfully");
-
-        loadTasks();
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        showToast("Unable to Add Task", "#dc2626");
-
-    }
+    loadTasks();
 
 });
 
 // ===================================
-// Search Tasks
+// Search
 // ===================================
 
 searchTask.addEventListener("keyup", () => {
@@ -313,9 +237,7 @@ searchTask.addEventListener("keyup", () => {
     const keyword = searchTask.value.toLowerCase();
 
     const filtered = tasks.filter(task =>
-
         task.text.toLowerCase().includes(keyword)
-
     );
 
     displayTasks(filtered);
@@ -323,12 +245,12 @@ searchTask.addEventListener("keyup", () => {
 });
 
 // ===================================
-// Enter Key Support
+// Enter Key
 // ===================================
 
-taskInput.addEventListener("keypress", (event) => {
+taskInput.addEventListener("keypress", (e) => {
 
-    if (event.key === "Enter") {
+    if (e.key === "Enter") {
 
         addBtn.click();
 
