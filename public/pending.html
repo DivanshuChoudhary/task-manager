@@ -7,118 +7,53 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pending Tasks</title>
+    <title>Pending Tasks | Dockerized Task Manager</title>
 
     <link rel="stylesheet" href="style.css">
-
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
 
 <body>
 
-<nav class="navbar">
+    <!-- Navbar -->
 
-<div class="logo">
+    <nav class="navbar">
 
-<i class="fa-solid fa-list-check"></i>
+        <div class="logo">
+            📝 Task Manager
+        </div>
 
-Task Manager
+        <ul class="nav-links">
 
-</div>
+            <li><a href="/dashboard">Dashboard</a></li>
 
-<ul>
+            <li><a href="/tasks">Tasks</a></li>
 
-<li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="/completed">Completed</a></li>
 
-<li><a href="tasks.html">Tasks</a></li>
+            <li><a href="/pending" class="active">Pending</a></li>
 
-<li><a href="completed.html">Completed</a></li>
+            <li><a href="/analytics">Analytics</a></li>
 
-<li><a href="pending.html" class="active">Pending</a></li>
+            <li><a href="/about">About</a></li>
 
-<li><a href="analytics.html">Analytics</a></li>
+        </ul>
 
-<li><a href="about.html">About</a></li>
+    </nav>
 
-</ul>
+    <div class="container">
 
-</nav>
+        <h1>⏳ Pending Tasks</h1>
 
-<div class="container">
+        <ul id="pendingList">
 
-<h1>
+            <li>Loading...</li>
 
-<i class="fa-solid fa-hourglass-half"></i>
+        </ul>
 
-Pending Tasks
+    </div>
 
-</h1>
-
-<ul id="pendingList">
-
-<li>Loading...</li>
-
-</ul>
-
-</div>
-
-<script>
-
-async function loadPending(){
-
-    try{
-
-        const response=await fetch("/api/tasks");
-
-        const tasks=await response.json();
-
-        const pending=tasks.filter(task=>!task.completed);
-
-        const list=document.getElementById("pendingList");
-
-        list.innerHTML="";
-
-        if(pending.length===0){
-
-            list.innerHTML="<li>No Pending Tasks 🎉</li>";
-
-            return;
-
-        }
-
-        pending.forEach(task=>{
-
-            const li=document.createElement("li");
-
-            li.innerHTML=`
-
-            <span>
-
-                ⏳ ${task.text}
-
-            </span>
-
-            `;
-
-            list.appendChild(li);
-
-        });
-
-    }
-
-    catch(error){
-
-        console.log(error);
-
-    }
-
-}
-
-loadPending();
-
-</script>
+    <script src="pending.js"></script>
 
 </body>
 
