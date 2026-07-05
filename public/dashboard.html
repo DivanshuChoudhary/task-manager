@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Dockerized Task Manager</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            📝 Task Manager
+        </div>
+
+        <ul class="nav-links">
+
+            <li><a href="/dashboard" class="active">Dashboard</a></li>
+
+            <li><a href="/tasks">Tasks</a></li>
+
+            <li><a href="/completed">Completed</a></li>
+
+            <li><a href="/pending">Pending</a></li>
+
+            <li><a href="/analytics">Analytics</a></li>
+
+            <li><a href="/about">About</a></li>
+
+        </ul>
+
+    </nav>
+
+    <!-- Dashboard -->
+
+    <div class="container">
+
+        <h1>📊 Dashboard</h1>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>Total Tasks</h3>
+
+                <h2 id="totalTasks">0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Completed</h3>
+
+                <h2 id="completedTasks">0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Pending</h3>
+
+                <h2 id="pendingTasks">0</h2>
+
+            </div>
+
+        </div>
+
+        <div class="recent-box">
+
+            <h2>🕒 Recent Tasks</h2>
+
+            <ul id="recentTaskList">
+
+                <li>Loading...</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <script src="/dashboard.js"></script>
+
+</body>
+
+</html>
