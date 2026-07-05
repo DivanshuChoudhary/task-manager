@@ -3,158 +3,239 @@ const path = require("path");
 
 const filePath = path.join(__dirname, "../data/tasks.json");
 
-// ===========================
+// ================================
 // Read Tasks
-// ===========================
+// ================================
 
-function readTasks() {
+const readTasks = () => {
 
     if (!fs.existsSync(filePath)) {
-
         fs.writeFileSync(filePath, "[]");
-
     }
 
-    const data = fs.readFileSync(filePath, "utf-8");
+    const data = fs.readFileSync(filePath, "utf8");
 
     return JSON.parse(data);
 
-}
+};
 
-// ===========================
+// ================================
 // Save Tasks
-// ===========================
+// ================================
 
-function saveTasks(tasks) {
+const saveTasks = (tasks) => {
 
-    fs.writeFileSync(filePath, JSON.stringify(tasks, null, 2));
+    fs.writeFileSync(
+        filePath,
+        JSON.stringify(tasks, null, 2)
+    );
 
-}
+};
 
-// ===========================
-// GET All Tasks
-// ===========================
+// ================================
+// GET ALL TASKS
+// ================================
 
 exports.getAllTasks = (req, res) => {
 
-    const tasks = readTasks();
+    try {
 
-    res.json(tasks);
+        const tasks = readTasks();
+
+        res.status(200).json(tasks);
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
 
 };
 
-// ===========================
-// GET Task By ID
-// ===========================
+// ================================
+// GET TASK BY ID
+// ================================
 
 exports.getTaskById = (req, res) => {
 
-    const tasks = readTasks();
+    try {
 
-    const task = tasks.find(t => t.id == req.params.id);
+        const tasks = readTasks();
 
-    if (!task) {
+        const task = tasks.find(
+            task => task.id == req.params.id
+        );
 
-        return res.status(404).json({
+        if (!task) {
 
-            message: "Task Not Found"
+            return res.status(404).json({
+                success: false,
+                message: "Task not found"
+            });
 
+        }
+
+        res.status(200).json(task);
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
         });
 
     }
 
-    res.json(task);
-
 };
 
-// ===========================
-// CREATE Task
-// ===========================
+// ================================
+// CREATE TASK
+// ================================
 
 exports.createTask = (req, res) => {
 
-    const tasks = readTasks();
+    try {
 
-    const newTask = {
+        const { text } = req.body;
 
-        id: Date.now(),
+        if (!text || text.trim() === "") {
 
-        text: req.body.text,
+            return res.status(400).json({
+                success: false,
+                message: "Task text is required"
+            });
 
-        completed: false
+        }
 
-    };
+        const tasks = readTasks();
 
-    tasks.push(newTask);
+        const newTask = {
 
-    saveTasks(tasks);
+            id: Date.now(),
 
-    res.status(201).json({
+            text: text.trim(),
 
-        message: "Task Added Successfully",
+            completed: false,
 
-        task: newTask
+            createdAt: new Date().toISOString()
 
-    });
+        };
 
-};
+        tasks.push(newTask);
 
-// ===========================
-// UPDATE Task
-// ===========================
+        saveTasks(tasks);
 
-exports.updateTask = (req, res) => {
+        res.status(201).json({
+            success: true,
+            message: "Task Created Successfully",
+            task: newTask
+        });
 
-    const tasks = readTasks();
+    } catch (error) {
 
-    const index = tasks.findIndex(t => t.id == req.params.id);
-
-    if (index === -1) {
-
-        return res.status(404).json({
-
-            message: "Task Not Found"
-
+        res.status(500).json({
+            success: false,
+            message: error.message
         });
 
     }
 
-    tasks[index] = {
+};
 
-        ...tasks[index],
+// ================================
+// UPDATE TASK
+// ================================
 
-        ...req.body
+exports.updateTask = (req, res) => {
 
-    };
+    try {
 
-    saveTasks(tasks);
+        const tasks = readTasks();
 
-    res.json({
+        const index = tasks.findIndex(
+            task => task.id == req.params.id
+        );
 
-        message: "Task Updated",
+        if (index === -1) {
 
-        task: tasks[index]
+            return res.status(404).json({
+                success: false,
+                message: "Task not found"
+            });
 
-    });
+        }
+
+        tasks[index] = {
+
+            ...tasks[index],
+
+            ...req.body
+
+        };
+
+        saveTasks(tasks);
+
+        res.status(200).json({
+            success: true,
+            message: "Task Updated Successfully",
+            task: tasks[index]
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
 
 };
 
-// ===========================
-// DELETE Task
-// ===========================
+// ================================
+// DELETE TASK
+// ================================
 
 exports.deleteTask = (req, res) => {
 
-    const tasks = readTasks();
+    try {
 
-    const filtered = tasks.filter(t => t.id != req.params.id);
+        const tasks = readTasks();
 
-    saveTasks(filtered);
+        const task = tasks.find(
+            task => task.id == req.params.id
+        );
 
-    res.json({
+        if (!task) {
 
-        message: "Task Deleted"
+            return res.status(404).json({
+                success: false,
+                message: "Task not found"
+            });
 
-    });
+        }
+
+        const updatedTasks = tasks.filter(
+            task => task.id != req.params.id
+        );
+
+        saveTasks(updatedTasks);
+
+        res.status(200).json({
+            success: true,
+            message: "Task Deleted Successfully"
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
 
 };
