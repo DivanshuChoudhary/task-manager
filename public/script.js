@@ -118,3 +118,128 @@ function displayTasks(taskArray) {
 
 }
 
+// ===================================
+// Complete Task
+// ===================================
+
+li.querySelector(".complete-btn").addEventListener("click", async () => {
+
+    try {
+
+        await fetch(`/api/tasks/${task.id}`, {
+
+            method: "PUT",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify({
+
+                text: task.text,
+
+                completed: !task.completed
+
+            })
+
+        });
+
+        showToast("Task Updated Successfully");
+
+        loadTasks();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        showToast("Update Failed", "#dc2626");
+
+    }
+
+});
+
+// ===================================
+// Edit Task
+// ===================================
+
+li.querySelector(".edit-btn").addEventListener("click", async () => {
+
+    const newText = prompt("Edit Task", task.text);
+
+    if (!newText || newText.trim() === "") return;
+
+    try {
+
+        await fetch(`/api/tasks/${task.id}`, {
+
+            method: "PUT",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify({
+
+                text: newText.trim(),
+
+                completed: task.completed
+
+            })
+
+        });
+
+        showToast("Task Edited Successfully");
+
+        loadTasks();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        showToast("Edit Failed", "#dc2626");
+
+    }
+
+});
+
+// ===================================
+// Delete Task
+// ===================================
+
+li.querySelector(".delete-btn").addEventListener("click", async () => {
+
+    const confirmDelete = confirm("Are you sure you want to delete this task?");
+
+    if (!confirmDelete) return;
+
+    try {
+
+        await fetch(`/api/tasks/${task.id}`, {
+
+            method: "DELETE"
+
+        });
+
+        showToast("Task Deleted Successfully", "#dc2626");
+
+        loadTasks();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        showToast("Delete Failed", "#dc2626");
+
+    }
+
+});
