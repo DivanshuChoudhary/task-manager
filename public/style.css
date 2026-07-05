@@ -4,6 +4,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
+/* ===========================
+   Reset
+=========================== */
+
 *{
     margin:0;
     padding:0;
@@ -12,8 +16,11 @@
 }
 
 body{
-    background:#eef4ff;
+
+    background:#eef3ff;
+
     color:#222;
+
 }
 
 /* ===========================
@@ -21,74 +28,69 @@ body{
 =========================== */
 
 .navbar{
+
     width:100%;
-    height:75px;
-    background:#0f172a;
+
+    height:80px;
+
+    background:#111827;
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
-    padding:0 60px;
-    position:sticky;
-    top:0;
-    z-index:1000;
-    box-shadow:0 5px 20px rgba(0,0,0,.2);
+
+    padding:0 70px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+
 }
 
 .logo{
-    color:white;
-    font-size:24px;
+
+    color:#fff;
+
+    font-size:32px;
+
     font-weight:700;
+
 }
 
-.logo i{
-    color:#38bdf8;
-    margin-right:8px;
-}
+.nav-links{
 
-.navbar ul{
     display:flex;
+
     list-style:none;
+
+    gap:35px;
+
 }
 
-.navbar ul li{
-    margin-left:25px;
-}
+.nav-links a{
 
-.navbar ul li a{
     color:white;
+
     text-decoration:none;
-    transition:.3s;
-    font-size:16px;
-    font-weight:500;
-}
 
-.navbar ul li a:hover{
-    color:#38bdf8;
-}
-
-.active{
-    color:#38bdf8 !important;
-}
-
-/* ===========================
-   Hero
-=========================== */
-
-.hero{
-    width:100%;
-    padding:70px;
-    background:linear-gradient(135deg,#2563eb,#38bdf8);
-    color:white;
-}
-
-.hero h1{
-    font-size:42px;
-    margin-bottom:15px;
-}
-
-.hero p{
     font-size:18px;
-    opacity:.95;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+.nav-links a:hover{
+
+    color:#38bdf8;
+
+}
+
+.nav-links .active{
+
+    color:#38bdf8;
+
 }
 
 /* ===========================
@@ -96,322 +98,111 @@ body{
 =========================== */
 
 .container{
+
     width:90%;
-    max-width:1200px;
-    margin:40px auto;
+
+    margin:50px auto;
+
 }
 
-.dashboard-title{
+.container h1{
+
+    font-size:42px;
+
     margin-bottom:30px;
-}
 
-.dashboard-title h2{
-    font-size:30px;
 }
 
 /* ===========================
-   Cards
+   Dashboard Cards
 =========================== */
 
 .cards{
+
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+
 }
 
 .card{
-    background:white;
+
+    background:#fff;
+
+    padding:35px;
+
     border-radius:20px;
-    padding:30px;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
-    transition:.4s;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+    transition:.3s;
+
 }
 
 .card:hover{
+
     transform:translateY(-8px);
+
 }
 
 .card h3{
-    color:#666;
-    margin-top:15px;
+
+    color:#555;
+
+    font-size:22px;
+
 }
 
-.card h1{
-    font-size:45px;
-    margin-top:10px;
-    color:#0f172a;
-}
+.card h2{
 
-.icon{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    font-size:25px;
-}
+    font-size:48px;
 
-.blue{
-    background:#2563eb;
-}
+    margin-top:20px;
 
-.green{
-    background:#22c55e;
-}
-
-.red{
-    background:#ef4444;
-}
-
-/* ==========================================
-   Progress Card
-========================================== */
-
-.progress-card{
-    background:#fff;
-    margin-top:35px;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
-}
-
-.progress-card h2{
-    margin-bottom:20px;
-    color:#0f172a;
-}
-
-.progress{
-    width:100%;
-    height:20px;
-    background:#e2e8f0;
-    border-radius:50px;
-    overflow:hidden;
-}
-
-#progressBar{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg,#22c55e,#16a34a);
-    transition:.5s;
-}
-
-#progressText{
-    margin-top:15px;
-    font-size:18px;
-    font-weight:bold;
     color:#2563eb;
+
 }
 
-/* ==========================================
-   Recent Tasks
-========================================== */
+/* ===========================
+   Recent Box
+=========================== */
 
-.recent{
-    margin-top:35px;
-    background:#fff;
+.recent-box{
+
+    margin-top:40px;
+
+    background:white;
+
+    padding:35px;
+
     border-radius:20px;
-    padding:30px;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
 }
 
-.recent h2{
+.recent-box h2{
+
     margin-bottom:20px;
-    color:#0f172a;
+
 }
 
-.recent ul{
+.recent-box ul{
+
     list-style:none;
+
 }
 
-.recent li{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.recent-box li{
+
     padding:18px;
+
+    background:#f3f4f6;
+
     margin-bottom:12px;
-    border-radius:12px;
-    background:#f8fafc;
-    transition:.3s;
-}
 
-.recent li:hover{
-    transform:translateX(5px);
-    background:#e0f2fe;
-}
-
-/* ==========================================
-   Task Input
-========================================== */
-
-.task-input{
-    display:flex;
-    gap:15px;
-    margin-bottom:25px;
-}
-
-.task-input input{
-    flex:1;
-    padding:16px;
-    border:1px solid #d1d5db;
-    border-radius:12px;
-    font-size:16px;
-    outline:none;
-}
-
-.task-input input:focus{
-    border-color:#2563eb;
-}
-
-.task-input button{
-    padding:16px 30px;
-    border:none;
-    border-radius:12px;
-    background:#2563eb;
-    color:#fff;
-    cursor:pointer;
-    transition:.3s;
-    font-weight:bold;
-}
-
-.task-input button:hover{
-    background:#1d4ed8;
-}
-
-/* ==========================================
-   Search
-========================================== */
-
-.search-box{
-    margin-bottom:25px;
-}
-
-.search-box input{
-    width:100%;
-    padding:16px;
-    border-radius:12px;
-    border:1px solid #d1d5db;
-    outline:none;
-}
-
-.search-box input:focus{
-    border-color:#2563eb;
-}
-
-/* ==========================================
-   Task List
-========================================== */
-
-#taskList{
-    list-style:none;
-}
-
-#taskList li{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:#fff;
-    padding:20px;
-    margin-bottom:15px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-}
-
-.completed{
-    text-decoration:line-through;
-    color:gray;
-}
-
-.task-actions{
-    display:flex;
-    gap:10px;
-}
-
-.task-actions button{
-    border:none;
-    padding:10px 14px;
     border-radius:10px;
-    cursor:pointer;
-    color:white;
-    transition:.3s;
-}
-
-.complete-btn{
-    background:#22c55e;
-}
-
-.complete-btn:hover{
-    background:#16a34a;
-}
-
-.edit-btn{
-    background:#f59e0b;
-}
-
-.edit-btn:hover{
-    background:#d97706;
-}
-
-.delete-btn{
-    background:#ef4444;
-}
-
-.delete-btn:hover{
-    background:#dc2626;
-}
-
-/* ==========================================
-   Responsive
-========================================== */
-
-@media(max-width:768px){
-
-.navbar{
-    flex-direction:column;
-    height:auto;
-    padding:20px;
-}
-
-.navbar ul{
-    margin-top:15px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-
-.navbar ul li{
-    margin:8px;
-}
-
-.hero{
-    padding:40px 25px;
-}
-
-.hero h1{
-    font-size:32px;
-}
-
-.cards{
-    grid-template-columns:1fr;
-}
-
-.task-input{
-    flex-direction:column;
-}
-
-.task-input button{
-    width:100%;
-}
-
-#taskList li{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:15px;
-}
-
-.task-actions{
-    width:100%;
-    justify-content:flex-end;
-}
 
 }
