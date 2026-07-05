@@ -206,3 +206,231 @@ body{
     border-radius:10px;
 
 }
+
+/* ===========================
+   Task Input
+=========================== */
+
+.task-box{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+}
+
+.task-box input{
+
+    flex:1;
+
+    padding:16px 20px;
+
+    font-size:18px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    background:white;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.task-box button{
+
+    padding:16px 35px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.task-box button:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ===========================
+   Search Box
+=========================== */
+
+.search-box{
+
+    margin-bottom:30px;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:15px 20px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    font-size:17px;
+
+    background:white;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+/* ===========================
+   Task List
+=========================== */
+
+#taskList{
+
+    list-style:none;
+
+}
+
+#taskList li{
+
+    background:white;
+
+    margin-bottom:18px;
+
+    padding:18px 22px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+#taskList li:hover{
+
+    transform:translateY(-4px);
+
+}
+
+/* ===========================
+   Completed Task
+=========================== */
+
+.completed{
+
+    text-decoration:line-through;
+
+    color:gray;
+
+    opacity:.7;
+
+}
+
+/* ===========================
+   Task Buttons
+=========================== */
+
+.task-actions{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.complete-btn,
+
+.edit-btn,
+
+.delete-btn{
+
+    border:none;
+
+    padding:10px 15px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.complete-btn{
+
+    background:#16a34a;
+
+}
+
+.complete-btn:hover{
+
+    background:#15803d;
+
+}
+
+.edit-btn{
+
+    background:#f59e0b;
+
+}
+
+.edit-btn:hover{
+
+    background:#d97706;
+
+}
+
+.delete-btn{
+
+    background:#dc2626;
+
+}
+
+.delete-btn:hover{
+
+    background:#b91c1c;
+
+}
+
+/* ===========================
+   Buttons Animation
+=========================== */
+
+button{
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    transform:scale(1.05);
+
+}
