@@ -434,3 +434,243 @@ button:hover{
     transform:scale(1.05);
 
 }
+
+/* ===========================
+   Toast Notification
+=========================== */
+
+#toast{
+
+    position:fixed;
+
+    top:30px;
+
+    right:30px;
+
+    background:#16a34a;
+
+    color:white;
+
+    padding:15px 25px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.4s;
+
+    z-index:9999;
+
+}
+
+#toast.show{
+
+    opacity:1;
+
+    top:60px;
+
+}
+
+/* ===========================
+   Completed & Pending List
+=========================== */
+
+#completedList,
+#pendingList{
+
+    list-style:none;
+
+    margin-top:30px;
+
+}
+
+#completedList li,
+#pendingList li{
+
+    background:white;
+
+    margin-bottom:15px;
+
+    padding:18px;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+/* ===========================
+   Chart
+=========================== */
+
+canvas{
+
+    max-width:700px;
+
+    margin:40px auto;
+
+    display:block;
+
+}
+
+/* ===========================
+   About Page
+=========================== */
+
+.about-card{
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+    line-height:1.8;
+
+}
+
+.about-card h2{
+
+    color:#2563eb;
+
+    margin-bottom:20px;
+
+}
+
+.about-card p{
+
+    margin-bottom:15px;
+
+    color:#555;
+
+}
+
+.about-card ul{
+
+    margin-left:20px;
+
+}
+
+.about-card li{
+
+    margin-bottom:12px;
+
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+footer{
+
+    text-align:center;
+
+    padding:25px;
+
+    margin-top:60px;
+
+    color:#666;
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:992px){
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+.navbar{
+
+padding:20px;
+
+flex-direction:column;
+
+height:auto;
+
+}
+
+.nav-links{
+
+margin-top:15px;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+.container h1{
+
+font-size:32px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.task-box{
+
+flex-direction:column;
+
+}
+
+.task-box button{
+
+width:100%;
+
+}
+
+#taskList li{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:15px;
+
+}
+
+.task-actions{
+
+width:100%;
+
+justify-content:space-between;
+
+}
+
+.logo{
+
+font-size:24px;
+
+}
+
+.nav-links{
+
+gap:15px;
+
+}
+
+.nav-links a{
+
+font-size:15px;
+
+}
+
+}
