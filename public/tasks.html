@@ -2,50 +2,62 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Tasks | Dockerized Task Manager</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-    <!-- Navbar -->
+    <!-- =========================
+            Navbar
+    ========================== -->
 
     <nav class="navbar">
 
         <div class="logo">
-            <i class="fa-solid fa-list-check"></i>
-            Task Manager
+
+            📝 Task Manager
+
         </div>
 
-        <ul>
+        <ul class="nav-links">
 
-            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
 
-            <li><a href="tasks.html" class="active">Tasks</a></li>
+            <li><a href="/tasks" class="active">Tasks</a></li>
 
-            <li><a href="completed.html">Completed</a></li>
+            <li><a href="/completed">Completed</a></li>
 
-            <li><a href="pending.html">Pending</a></li>
+            <li><a href="/pending">Pending</a></li>
 
-            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="/analytics">Analytics</a></li>
 
-            <li><a href="about.html">About</a></li>
+            <li><a href="/about">About</a></li>
 
         </ul>
 
     </nav>
 
+    <!-- =========================
+            Container
+    ========================== -->
+
     <div class="container">
 
-        <h1>📋 Manage Your Tasks</h1>
+        <h1>📋 Task Manager</h1>
 
-        <div class="task-input">
+        <!-- Add Task -->
+
+        <div class="task-box">
 
             <input
                 type="text"
@@ -55,13 +67,13 @@
 
             <button id="addBtn">
 
-                <i class="fa-solid fa-plus"></i>
-
                 Add Task
 
             </button>
 
         </div>
+
+        <!-- Search -->
 
         <div class="search-box">
 
@@ -73,19 +85,17 @@
 
         </div>
 
+        <!-- Task List -->
+
         <ul id="taskList">
 
-            <li>
-
-                Loading Tasks...
-
-            </li>
+            <li>No Tasks Available</li>
 
         </ul>
 
     </div>
 
-    <!-- Toast -->
+    <!-- Toast Notification -->
 
     <div id="toast"></div>
 
