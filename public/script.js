@@ -1,3 +1,7 @@
+// ===================================
+// DOM Elements
+// ===================================
+
 const taskInput = document.getElementById("taskInput");
 const addBtn = document.getElementById("addBtn");
 const searchTask = document.getElementById("searchTask");
@@ -6,13 +10,14 @@ const toast = document.getElementById("toast");
 
 let tasks = [];
 
-// =============================
+// ===================================
 // Toast Notification
-// =============================
+// ===================================
 
 function showToast(message, color = "#16a34a") {
 
     toast.innerText = message;
+
     toast.style.background = color;
 
     toast.classList.add("show");
@@ -25,9 +30,9 @@ function showToast(message, color = "#16a34a") {
 
 }
 
-// =============================
+// ===================================
 // Load Tasks
-// =============================
+// ===================================
 
 async function loadTasks() {
 
@@ -39,19 +44,21 @@ async function loadTasks() {
 
         displayTasks(tasks);
 
-    } catch (error) {
+    }
 
-        console.log(error);
+    catch (error) {
 
-        showToast("Server Error", "#dc2626");
+        console.error(error);
+
+        showToast("Unable to connect to server", "#dc2626");
 
     }
 
 }
 
-// =============================
+// ===================================
 // Display Tasks
-// =============================
+// ===================================
 
 function displayTasks(taskArray) {
 
@@ -60,9 +67,9 @@ function displayTasks(taskArray) {
     if (taskArray.length === 0) {
 
         taskList.innerHTML = `
-        <li style="justify-content:center;">
-            No Tasks Found
-        </li>
+            <li style="justify-content:center;">
+                No Tasks Available
+            </li>
         `;
 
         return;
@@ -105,170 +112,9 @@ function displayTasks(taskArray) {
 
         `;
 
-        // Complete
-
-        li.querySelector(".complete-btn").onclick = async () => {
-
-            await fetch(`/api/tasks/${task.id}`, {
-
-                method: "PUT",
-
-                headers: {
-
-                    "Content-Type": "application/json"
-
-                },
-
-                body: JSON.stringify({
-
-                    text: task.text,
-
-                    completed: !task.completed
-
-                })
-
-            });
-
-            showToast("Task Updated");
-
-            loadTasks();
-
-        };
-
-        // Edit
-
-        li.querySelector(".edit-btn").onclick = async () => {
-
-            const newTask = prompt("Edit Task", task.text);
-
-            if (!newTask) return;
-
-            await fetch(`/api/tasks/${task.id}`, {
-
-                method: "PUT",
-
-                headers: {
-
-                    "Content-Type": "application/json"
-
-                },
-
-                body: JSON.stringify({
-
-                    text: newTask,
-
-                    completed: task.completed
-
-                })
-
-            });
-
-            showToast("Task Edited");
-
-            loadTasks();
-
-        };
-
-        // Delete
-
-        li.querySelector(".delete-btn").onclick = async () => {
-
-            const confirmDelete = confirm("Delete this task?");
-
-            if (!confirmDelete) return;
-
-            await fetch(`/api/tasks/${task.id}`, {
-
-                method: "DELETE"
-
-            });
-
-            showToast("Task Deleted", "#dc2626");
-
-            loadTasks();
-
-        };
-
         taskList.appendChild(li);
 
     });
 
 }
 
-// =============================
-// Add Task
-// =============================
-
-addBtn.addEventListener("click", async () => {
-
-    const text = taskInput.value.trim();
-
-    if (text === "") {
-
-        showToast("Please Enter Task", "#f59e0b");
-
-        return;
-
-    }
-
-    await fetch("/api/tasks", {
-
-        method: "POST",
-
-        headers: {
-
-            "Content-Type": "application/json"
-
-        },
-
-        body: JSON.stringify({
-
-            text
-
-        })
-
-    });
-
-    taskInput.value = "";
-
-    showToast("Task Added Successfully");
-
-    loadTasks();
-
-});
-
-// =============================
-// Search
-// =============================
-
-searchTask.addEventListener("keyup", () => {
-
-    const keyword = searchTask.value.toLowerCase();
-
-    const filtered = tasks.filter(task =>
-
-        task.text.toLowerCase().includes(keyword)
-
-    );
-
-    displayTasks(filtered);
-
-});
-
-// =============================
-// Enter Key Support
-// =============================
-
-taskInput.addEventListener("keypress", (e) => {
-
-    if (e.key === "Enter") {
-
-        addBtn.click();
-
-    }
-
-});
-
-// =============================
-
-loadTasks();
