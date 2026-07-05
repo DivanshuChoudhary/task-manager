@@ -15,12 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ================================
-// Static Files
-// ================================
-
-app.use(express.static(path.join(__dirname, "public")));
-
-// ================================
 // API Routes
 // ================================
 
@@ -59,6 +53,12 @@ app.get("/about", (req, res) => {
 });
 
 // ================================
+// Static Files (CSS, JS, Images)
+// ================================
+
+app.use(express.static(path.join(__dirname, "public")));
+
+// ================================
 // 404 Route
 // ================================
 
@@ -77,7 +77,7 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log("=================================");
-    console.log(`🚀 Server Running`);
+    console.log("🚀 Server Running");
     console.log(`🌐 http://localhost:${PORT}`);
     console.log("=================================");
 });
