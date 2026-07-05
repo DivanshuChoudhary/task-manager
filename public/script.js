@@ -243,3 +243,101 @@ li.querySelector(".delete-btn").addEventListener("click", async () => {
     }
 
 });
+
+// ===================================
+// Add New Task
+// ===================================
+
+addBtn.addEventListener("click", async () => {
+
+    const text = taskInput.value.trim();
+
+    if (text === "") {
+
+        showToast("Please Enter a Task", "#f59e0b");
+
+        return;
+
+    }
+
+    try {
+
+        const response = await fetch("/api/tasks", {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/json"
+
+            },
+
+            body: JSON.stringify({
+
+                text: text
+
+            })
+
+        });
+
+        if (!response.ok) {
+
+            throw new Error("Failed to add task");
+
+        }
+
+        taskInput.value = "";
+
+        showToast("Task Added Successfully");
+
+        loadTasks();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        showToast("Unable to Add Task", "#dc2626");
+
+    }
+
+});
+
+// ===================================
+// Search Tasks
+// ===================================
+
+searchTask.addEventListener("keyup", () => {
+
+    const keyword = searchTask.value.toLowerCase();
+
+    const filtered = tasks.filter(task =>
+
+        task.text.toLowerCase().includes(keyword)
+
+    );
+
+    displayTasks(filtered);
+
+});
+
+// ===================================
+// Enter Key Support
+// ===================================
+
+taskInput.addEventListener("keypress", (event) => {
+
+    if (event.key === "Enter") {
+
+        addBtn.click();
+
+    }
+
+});
+
+// ===================================
+// Initial Load
+// ===================================
+
+loadTasks();
