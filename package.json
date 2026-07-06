@@ -4,17 +4,11 @@
   "description": "Dockerized Task Manager using Node.js, Express, HTML, CSS and JavaScript",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node.index.js",
+    "dev": "nodemon --legacy-watch index.js"
   },
-  "keywords": [
-    "docker",
-    "express",
-    "nodejs",
-    "task-manager",
-    "devops"
-  ],
-  "author": "Divanshu Choudhary",
+  
+  "author": "",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
