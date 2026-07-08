@@ -6,23 +6,16 @@ const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
 
-// ================================
-// Middleware
-// ================================
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ================================
-// API Routes
-// ================================
+
 
 app.use("/api/tasks", taskRoutes);
 
-// ================================
-// Frontend Routes
-// ================================
+
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "dashboard.html"));
@@ -52,15 +45,11 @@ app.get("/about", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "about.html"));
 });
 
-// ================================
-// Static Files (CSS, JS, Images)
-// ================================
+
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// ================================
-// 404 Route
-// ================================
+
 
 app.use((req, res) => {
     res.status(404).json({
@@ -69,9 +58,7 @@ app.use((req, res) => {
     });
 });
 
-// ================================
-// Server
-// ================================
+
 
 const PORT = process.env.PORT || 5000;
 

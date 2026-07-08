@@ -1,15 +1,11 @@
-// ================================
-// Dashboard
-// ================================
+
 
 const totalTasks = document.getElementById("totalTasks");
 const completedTasks = document.getElementById("completedTasks");
 const pendingTasks = document.getElementById("pendingTasks");
 const recentTaskList = document.getElementById("recentTaskList");
 
-// ================================
-// Load Dashboard
-// ================================
+
 
 async function loadDashboard() {
 
@@ -76,8 +72,6 @@ async function loadDashboard() {
 
 }
 
-// ================================
-// Start
-// ================================
+
 
 loadDashboard();

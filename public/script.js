@@ -1,6 +1,4 @@
-// ===================================
-// DOM Elements
-// ===================================
+
 
 const taskInput = document.getElementById("taskInput");
 const addBtn = document.getElementById("addBtn");
@@ -10,9 +8,7 @@ const toast = document.getElementById("toast");
 
 let tasks = [];
 
-// ===================================
-// Toast Notification
-// ===================================
+
 
 function showToast(message, color = "#16a34a") {
 
@@ -26,9 +22,7 @@ function showToast(message, color = "#16a34a") {
 
 }
 
-// ===================================
-// Load Tasks
-// ===================================
+
 
 async function loadTasks() {
 
@@ -50,9 +44,7 @@ async function loadTasks() {
 
 }
 
-// ===================================
-// Display Tasks
-// ===================================
+
 
 function displayTasks(taskArray) {
 
@@ -92,9 +84,7 @@ function displayTasks(taskArray) {
 
         `;
 
-        // ==========================
-        // Complete
-        // ==========================
+       
 
         li.querySelector(".complete-btn").addEventListener("click", async () => {
 
@@ -124,9 +114,7 @@ function displayTasks(taskArray) {
 
         });
 
-        // ==========================
-        // Edit
-        // ==========================
+        
 
         li.querySelector(".edit-btn").addEventListener("click", async () => {
 
@@ -160,9 +148,7 @@ function displayTasks(taskArray) {
 
         });
 
-        // ==========================
-        // Delete
-        // ==========================
+       
 
         li.querySelector(".delete-btn").addEventListener("click", async () => {
 
@@ -186,9 +172,7 @@ function displayTasks(taskArray) {
 
 }
 
-// ===================================
-// Add Task
-// ===================================
+
 
 addBtn.addEventListener("click", async () => {
 
@@ -228,9 +212,7 @@ addBtn.addEventListener("click", async () => {
 
 });
 
-// ===================================
-// Search
-// ===================================
+
 
 searchTask.addEventListener("keyup", () => {
 
@@ -244,9 +226,7 @@ searchTask.addEventListener("keyup", () => {
 
 });
 
-// ===================================
-// Enter Key
-// ===================================
+
 
 taskInput.addEventListener("keypress", (e) => {
 
@@ -258,8 +238,6 @@ taskInput.addEventListener("keypress", (e) => {
 
 });
 
-// ===================================
-// Initial Load
-// ===================================
+
 
 loadTasks();

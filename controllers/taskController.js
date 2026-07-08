@@ -3,9 +3,7 @@ const path = require("path");
 
 const filePath = path.join(__dirname, "../data/tasks.json");
 
-// ================================
-// Read Tasks
-// ================================
+
 
 const readTasks = () => {
 
@@ -19,9 +17,6 @@ const readTasks = () => {
 
 };
 
-// ================================
-// Save Tasks
-// ================================
 
 const saveTasks = (tasks) => {
 
@@ -32,9 +27,7 @@ const saveTasks = (tasks) => {
 
 };
 
-// ================================
-// GET ALL TASKS
-// ================================
+
 
 exports.getAllTasks = (req, res) => {
 
@@ -55,9 +48,7 @@ exports.getAllTasks = (req, res) => {
 
 };
 
-// ================================
-// GET TASK BY ID
-// ================================
+
 
 exports.getTaskById = (req, res) => {
 
@@ -91,9 +82,7 @@ exports.getTaskById = (req, res) => {
 
 };
 
-// ================================
-// CREATE TASK
-// ================================
+
 
 exports.createTask = (req, res) => {
 
@@ -145,9 +134,7 @@ exports.createTask = (req, res) => {
 
 };
 
-// ================================
-// UPDATE TASK
-// ================================
+
 
 exports.updateTask = (req, res) => {
 
@@ -195,9 +182,6 @@ exports.updateTask = (req, res) => {
 
 };
 
-// ================================
-// DELETE TASK
-// ================================
 
 exports.deleteTask = (req, res) => {
 
